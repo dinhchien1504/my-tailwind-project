@@ -71,7 +71,7 @@ const MainContent = (props: IProps) => {
           };
         });
 
-      setForecasts(processedData.slice(0, 6)); // Giới hạn 6 ngày
+      setForecasts(processedData.slice(0, 7)); 
     };
 
     processForecastData();
@@ -122,7 +122,7 @@ const MainContent = (props: IProps) => {
       </div>
     </div>
   );
-  
+
 };
 
 export default MainContent;
