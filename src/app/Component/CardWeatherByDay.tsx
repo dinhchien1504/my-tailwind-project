@@ -16,17 +16,14 @@ const CardWeather = ({ forecast }: IProps) => {
     <div className='flex flex-col justify-between text-center gap-2 rounded-xl border-2 border-solid border-transparent 
      hover:border-[#E1E1E1] p-4 transition duration-200 w-28'>
       
-      {/* Dòng 1: Giờ */}
       <div className="font-semibold text-sm text-gray-700">
         {formatTo12HourTime(forecast.dt_txt)}
       </div>
 
-      {/* Dòng 2: Nhiệt độ */}
       <div className="text-xl font-bold text-blue-600">
         {HandleTemperature(forecast.main.temp)}
       </div>
 
-      {/* Dòng 3: Mô tả */}
       <div className="text-xs text-gray-500 capitalize">
         {forecast.weather?.[0]?.description ?? '--'}
       </div>

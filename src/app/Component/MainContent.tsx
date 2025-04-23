@@ -137,7 +137,7 @@ const MainContent = ({ dataForecast, dataWeather, onCityChange }: IProps) => {
         </div>
       </div>
 
-      <div className="flex flex-row justify-center items-center overflow-x-auto w-3/4 mt-4">
+      <div className="flex flex-row justify-center items-center overflow-x-auto w-4/5 mt-4">
         {forecasts.map((forecast, index) => (
           <CardWeather
             key={`${forecast.date}-${index}`}
