@@ -6,7 +6,7 @@ import { formatTo12HourTime } from '../utils/handle-day-time';
 
 
 interface IProps {
-  forecast?: ForecastHandleResponse;
+  forecast?: ForecastItemResponse;
 }
 
 const CardWeather = ({ forecast }: IProps) => {

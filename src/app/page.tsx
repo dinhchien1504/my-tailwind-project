@@ -12,6 +12,11 @@ export default function Home() {
   const [city, setCity] = useState<string>("Ho chi minh")
   const [dataForecast, setDataForecast] = useState<ForecastResponse | undefined>(undefined);
 
+
+  const handleCityChange = (city: string) => {
+    setCity(city);
+  };
+
   useEffect(() => {
 
     const fetchWeatherCity = async () => {
@@ -50,15 +55,13 @@ export default function Home() {
     fetchForecastCity()
 
   }, [city])
-
   
-  console.log ('dataweather',dataWeather)
-  console.log ('dataForecast',dataForecast)
+  
   return (
     <div className="bg-[#EAEAEA] w-full h-screen flex items-center justify-center">
       <div className="bg-[#FAFAFA] w-4/5 h-4/5 grid grid-cols-10 gap-4 rounded-3xl shadow-lg overflow-hidden border">
         <div className="col-span-7 bg-[#FAFAFA] p-4 ">
-        <MainContent dataWeather={dataWeather} dataForecast={dataForecast} />
+        <MainContent dataWeather={dataWeather} dataForecast={dataForecast} onCityChange={handleCityChange}  />
           </div>
         <div className="col-span-3 bg-[#F6F6F6] opacity-80 p-4">
           <NavRight dataWeather={dataWeather} dataForecast={dataForecast}/>
