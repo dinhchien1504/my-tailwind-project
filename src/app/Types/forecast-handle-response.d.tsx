@@ -1,4 +1,4 @@
-    interface ForecastHandleResponse {
+    export interface ForecastHandleResponse {
         date:string,
         tempMax:number,
         tempMin:number,

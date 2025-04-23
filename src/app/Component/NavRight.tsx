@@ -3,9 +3,12 @@
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWind, faDroplet } from "@fortawesome/free-solid-svg-icons";
-import CardWeather from "./CardWeather";
 import { HandleTemperature } from "../utils/handle-temperature";
 import { capitalizeEachWord, formatTo12HourTime } from "../utils/handle-day-time";
+import { ForecastResponse } from "../types/forecast-response.d";
+import { WeatherResponse } from "../types/weather-response.d";
+import { ForecastItemResponse } from "../types/forecast-item-response.d";
+import CardWeather from "./CardWeather";
 
 interface IProps {
   dataForecast: ForecastResponse | undefined;

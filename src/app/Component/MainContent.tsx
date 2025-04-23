@@ -10,11 +10,12 @@ import {
   formatDayName,
   handleBeforeDay,
 } from "../utils/handle-day-time";
-import { findMostFrequentElement } from "../utils/handle-icon";
 import { tinhThanh } from "../utils/tinhthanh"; // <-- danh sách tỉnh thành
 
-import type { SimplifiedForecast } from "../Types/processed-data";
-// import type { ForecastResponse, ForecastItemResponse, WeatherResponse } from "../Types/"; // thêm nếu chưa có
+import { ForecastResponse } from "../types/forecast-response.d";
+import { WeatherResponse } from "../types/weather-response.d";
+import { SimplifiedForecast } from "../types/processed-data";
+import { ForecastItemResponse } from "../types/forecast-item-response.d";
 interface IProps {
   dataForecast?: ForecastResponse;
   dataWeather?: WeatherResponse;
@@ -77,14 +78,6 @@ const MainContent = ({ dataForecast, dataWeather, onCityChange }: IProps) => {
 
     setForecasts(processedData.slice(0, 7));
   }, [dataForecast, isMounted]);
-
-  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const value = e.target.value;
-    setSelectedCity(value);
-    if (onCityChange) {
-      onCityChange(value); // truyền ra component cha nếu có
-    }
-  };
 
   return (
     <div className="flex flex-col justify-center items-center gap-y-16">

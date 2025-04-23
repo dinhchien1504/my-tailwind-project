@@ -1,4 +1,4 @@
-interface ForecastItemResponse  {
+export interface ForecastItemResponse  {
     dt: number,
     main: {
         temp: number,

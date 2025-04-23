@@ -1,9 +1,10 @@
 "use client";
-import Image from "next/image";
-import MainContent from "./Component/MainContent";
-import NavRight from "./Component/NavRight";
+import MainContent from "./component/MainContent";
+import NavRight from "./component/NavRight";
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
+import { WeatherResponse } from "./types/weather-response.d";
+import { ForecastResponse } from "./types/forecast-response.d";
 
 
 export default function Home() {

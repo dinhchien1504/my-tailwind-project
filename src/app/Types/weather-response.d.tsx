@@ -1,4 +1,4 @@
-interface WeatherResponse {
+export interface WeatherResponse {
     coord: {
         lon: number,
         lat: number

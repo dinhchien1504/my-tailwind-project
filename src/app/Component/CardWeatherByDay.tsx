@@ -2,6 +2,7 @@
 import React from 'react';
 import { HandleTemperature } from '../utils/handle-temperature';
 import { formatTo12HourTime } from '../utils/handle-day-time';
+import { ForecastItemResponse } from '../types/forecast-item-response.d';
 
 
 

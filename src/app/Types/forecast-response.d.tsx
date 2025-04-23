@@ -1,4 +1,6 @@
-interface ForecastResponse {
+import { ForecastItemResponse } from "./forecast-item-response.d"
+
+export interface ForecastResponse {
     cod: number,
     message: number,
     cnt: number,
