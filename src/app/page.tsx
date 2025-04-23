@@ -1,10 +1,10 @@
 "use client";
-import MainContent from "./component/MainContent";
-import NavRight from "./component/NavRight";
+import MainContent from "@/component/MainContent";
+import NavRight from "@/component/NavRight";
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import { WeatherResponse } from "./types/weather-response.d";
-import { ForecastResponse } from "./types/forecast-response.d";
+import { WeatherResponse } from "@/types/weather-response.d";
+import { ForecastResponse } from "@/types/forecast-response.d";
 
 
 export default function Home() {

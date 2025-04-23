@@ -1,3 +1,5 @@
+import { ForecastItemResponse } from "@/types/forecast-item-response.d";
+
 export const HandleTemperature = (kelvin?: number) => {
     if (kelvin === undefined) {
         return 'N/A'; // Hoặc có thể trả về một giá trị khác phù hợp, như 'Chưa có dữ liệu'
