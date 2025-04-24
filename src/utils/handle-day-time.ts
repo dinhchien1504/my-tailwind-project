@@ -51,7 +51,7 @@ export const formatTo12HourTime = (dateString: string) => {
       hour: 'numeric',
       minute: '2-digit',
       hour12: true,
-      timeZone: 'UTC' // Thêm timezone cố định
+      timeZone: 'Asia/Ho_Chi_Minh' // Thêm timezone cố định
     });
   };
   export const formatDayName = (dateStr: string): string => {

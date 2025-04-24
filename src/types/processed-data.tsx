@@ -1,5 +1,7 @@
 export type SimplifiedForecast = {
     date: string;
-    tempMax: number;
+    tempMin?: number;
+    tempMax?: number;
     description: string;
+    icon: string;
   };

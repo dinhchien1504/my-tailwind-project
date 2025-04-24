@@ -1,10 +1,8 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faWind, faDroplet } from "@fortawesome/free-solid-svg-icons";
 import CardWeather from "@/component/CardWeather";
 import Select from "react-select";
-import { findMaxNumber, HandleTemperature } from "@/utils/handle-temperature";
+import { findMaxNumber, findMinNumber, HandleTemperature } from "@/utils/handle-temperature";
 import {
   capitalizeEachWord,
   formatDayName,
@@ -16,38 +14,22 @@ import { ForecastResponse } from "@/types/forecast-response.d";
 import { WeatherResponse } from "@/types/weather-response.d";
 import { SimplifiedForecast } from "@/types/processed-data";
 import { ForecastItemResponse } from "@/types/forecast-item-response.d";
+import Image from "next/image";
+import { useMyContext } from "@/app/MyContext";
 interface IProps {
   dataForecast?: ForecastResponse;
   dataWeather?: WeatherResponse;
-  onCityChange?: (city: string) => void; // <-- optional callback
 }
 
-const MainContent = ({ dataForecast, dataWeather, onCityChange }: IProps) => {
+const MainContent = ({ dataForecast, dataWeather }: IProps) => {
   const [forecasts, setForecasts] = useState<SimplifiedForecast[]>([]);
   const [isMounted, setIsMounted] = useState(false);
-  const [currentTime, setCurrentTime] = useState("--");
-
+  const {city, setCity } = useMyContext();
   const [cityList, setCityList] = useState<{ value: string; label: string }[]>(
     []
   );
-  const [selectedCity, setSelectedCity] = useState("Quận 4");
-
   useEffect(() => {
     setIsMounted(true);
-    const timer = setInterval(() => {
-      setCurrentTime(
-        new Date().toLocaleTimeString("en-US", {
-          hour: "2-digit",
-          minute: "2-digit",
-          hour12: true,
-          timeZone: "Asia/Ho_Chi_Minh",
-        })
-      );
-    }, 1000);
-    return () => clearInterval(timer);
-  }, []);
-
-  useEffect(() => {
     const cities = tinhThanh();
     setCityList(cities);
   }, []);
@@ -64,15 +46,19 @@ const MainContent = ({ dataForecast, dataWeather, onCityChange }: IProps) => {
         groupedByDate[dateStr].push(forec);
       }
     });
+    console.log("group",groupedByDate)
 
     const processedData: SimplifiedForecast[] = Object.values(groupedByDate)
       .filter((day) => day.length > 0)
       .map((day) => {
         const descriptions = day.map((f) => f.weather?.[0]?.description || "");
+        const icons = day.map((f) => f.weather?.[0]?.icon || "");
         return {
           date: formatDayName(day[0]?.dt_txt?.split(" ")[0] || ""),
           tempMax: findMaxNumber(day),
+          tempMin: findMinNumber(day),
           description: descriptions[0] || "--",
+          icon: icons[0] || "",
         };
       });
 
@@ -80,64 +66,72 @@ const MainContent = ({ dataForecast, dataWeather, onCityChange }: IProps) => {
   }, [dataForecast, isMounted]);
 
   return (
-    <div className="flex flex-col justify-center items-center gap-y-16">
-      <div className="flex flex-row justify-around m-4 text-lg w-full">
-        <div className=" flex flex-row w-3/4 ">
+    <div className="flex flex-col justify-center items-center gap-y-10">
+      <div className="flex justify-around m-4 text-lg w-full">
+        <div className=" flex w-3/4 ">
           {isMounted && (
             <Select
               inputId="city-select"
               options={cityList}
-              value={cityList.find((c) => c.value === selectedCity)}
+              value={cityList.find((c) => c.value === city)}
               onChange={(option) => {
                 if (option) {
-                  setSelectedCity(option.value);
-                  onCityChange?.(option.value);
+                  setCity(option.value);
                 }
               }}
               placeholder="Chọn tỉnh/thành"
               className="w-full border-0 text-black bg-transparent "
               isSearchable
+              styles={{
+                control: (base) => ({
+                  ...base,
+                  backgroundColor: 'transparent',
+                  border: 'none',
+                  boxShadow: 'none',
+                }),
+                menu: (base) => ({
+                  ...base,
+                  backgroundColor: 'white', // Bạn có thể để transparent nếu muốn dropdown cũng trong suốt
+                }),
+                input: (base) => ({
+                  ...base,
+                  color: 'white',
+                }),
+                placeholder: (base) => ({
+                  ...base,
+                  color: 'white',
+                }),
+                singleValue: (base) => ({
+                  ...base,
+                  color: 'white',
+                }),
+              }}
             />
           )}
         </div>
-        <div className="text-black font-medium text-xl flex items-center">
-          {isMounted ? currentTime : "--"}
-        </div>
       </div>
 
-      <div className="flex flex-col items-center">
-        <div className="text-9xl font-bold text-gray-700">
+      <div className="flex flex-col items-center w-full gap-2">
+      <div className="text-3xl font-bold text-white leading-none">{city}</div>
+        <div className="text-8xl font-bold text-white">
           {dataWeather?.main?.temp !== undefined
             ? HandleTemperature(dataWeather.main.temp)
             : "--"}
         </div>
-
-        <div className="flex flex-row gap-4 mt-2">
-          <div className="text-2xl text-gray-600 flex items-center gap-2">
-            <FontAwesomeIcon icon={faWind} />
-            {dataWeather?.wind?.speed ?? "--"} m/s
-          </div>
-          <div className="text-2xl text-gray-600 flex items-center gap-2">
-            <FontAwesomeIcon icon={faDroplet} />
-            {dataWeather?.main?.humidity ?? "--"}%
-          </div>
-        </div>
-
-        <div className="text-3xl text-gray-700 p-2 mt-2">
-          {dataWeather?.weather?.[0]?.description
-            ? capitalizeEachWord(dataWeather.weather[0].description)
-            : "--"}
-        </div>
+           <Image  src={`https://openweathermap.org/img/wn/${dataWeather?.weather?.[0].icon}@2x.png`} className="object-cover" alt={capitalizeEachWord(dataWeather?.weather[0]?.description || "")} height={120} width={120} /> 
       </div>
 
-      <div className="flex flex-row justify-center items-center overflow-x-auto w-4/5 mt-4">
+      <div className="flex flex-row justify-center items-center overflow-x-auto w-full px-6">
         {forecasts.map((forecast, index) => (
           <CardWeather
             key={`${forecast.date}-${index}`}
             dateLabel={forecast.date}
-            temperature={forecast.tempMax}
+            tempMin={forecast.tempMin}
+            tempMax={forecast.tempMax}
             description={forecast.description}
+            icon={forecast.icon}
             isToday={index === 0}
+            type="day"
           />
         ))}
       </div>
