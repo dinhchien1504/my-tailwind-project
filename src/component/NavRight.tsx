@@ -10,6 +10,7 @@ import { WeatherResponse } from "@/types/weather-response.d";
 import { ForecastItemResponse } from "@/types/forecast-item-response.d";
 import CardWeather from "@/component/CardWeather";
 import { useMyContext } from "@/app/MyContext";
+import WeatherInfoItem from "@/component/WeatherInfoItem";
 
 interface IProps {
   dataForecast?: ForecastResponse;
@@ -57,66 +58,83 @@ const NavRight = ({ dataForecast, dataWeather }: IProps) => {
   return (
     <div className="flex flex-col justify-center text-center text-white">
       <div className="text-2xl p-6 font-bold">{currentTime}</div>
-
       <div className="pt-4 flex flex-col items-center gap-4">
   <div className="grid grid-cols-3 gap-x-6 gap-y-3 text-sm text-left">
-    <div className="flex items-center gap-2">
-      <FontAwesomeIcon icon={faDroplet} />
-      <span>Độ ẩm:</span> {dataWeather?.main?.humidity ?? "--"}%
-    </div>
-    <div className="flex items-center gap-2">
-      <FontAwesomeIcon icon={faWind} />
-      <span>Gió:</span> {dataWeather?.wind?.speed ?? "--"} m/s
-    </div>
-    <div className="flex items-center gap-2">
-      <FontAwesomeIcon icon={faTemperatureHalf} />
-      <span>Cảm giác:</span>{" "}
-      {dataWeather?.main?.feels_like
-        ? HandleTemperature(dataWeather.main.feels_like)
-        : "--"}
-    </div>
-    <div className="flex items-center gap-2">
-      <FontAwesomeIcon icon={faArrowDown} />
-      <span>Thấp nhất:</span>{" "}
-      {dataWeather?.main?.temp_min
-        ? HandleTemperature(dataWeather.main.temp_min)
-        : "--"}
-    </div>
-    <div className="flex items-center gap-2">
-      <FontAwesomeIcon icon={faArrowUp} />
-      <span>Cao nhất:</span>{" "}
-      {dataWeather?.main?.temp_max
-        ? HandleTemperature(dataWeather.main.temp_max)
-        : "--"}
-    </div>
-    <div className="flex items-center gap-2">
-      <FontAwesomeIcon icon={faGauge} />
-      <span>Áp suất:</span> {dataWeather?.main?.pressure ?? "--"} hPa
-    </div>
-    <div className="flex items-center gap-2">
-      <FontAwesomeIcon icon={faCloud} />
-      <span>Mây:</span> {dataWeather?.clouds?.all ?? "--"}%
-    </div>
-    <div className="flex items-center gap-2">
-      <FontAwesomeIcon icon={faSun} />
-      <span>Mọc:</span>{" "}
-      {dataWeather?.sys?.sunrise
-        ? new Date(dataWeather.sys.sunrise * 1000).toLocaleTimeString("vi-VN", {
-            hour: "2-digit",
-            minute: "2-digit",
-          })
-        : "--"}
-    </div>
-    <div className="flex items-center gap-2">
-      <FontAwesomeIcon icon={faMoon} />
-      <span>Lặn:</span>{" "}
-      {dataWeather?.sys?.sunset
-        ? new Date(dataWeather.sys.sunset * 1000).toLocaleTimeString("vi-VN", {
-            hour: "2-digit",
-            minute: "2-digit",
-          })
-        : "--"}
-    </div>
+    <WeatherInfoItem
+      icon={<FontAwesomeIcon icon={faDroplet} />}
+      label="Độ ẩm:"
+      value={dataWeather?.main?.humidity ?? "--"}
+      unit="%"
+    />
+    <WeatherInfoItem
+      icon={<FontAwesomeIcon icon={faWind} />}
+      label="Gió:"
+      value={dataWeather?.wind?.speed ?? "--"}
+      unit="m/s"
+    />
+    <WeatherInfoItem
+      icon={<FontAwesomeIcon icon={faTemperatureHalf} />}
+      label="Cảm giác:"
+      value={
+        dataWeather?.main?.feels_like
+          ? HandleTemperature(dataWeather.main.feels_like)
+          : "--"
+      }
+    />
+    <WeatherInfoItem
+      icon={<FontAwesomeIcon icon={faArrowDown} />}
+      label="Thấp nhất:"
+      value={
+        dataWeather?.main?.temp_min
+          ? HandleTemperature(dataWeather.main.temp_min)
+          : "--"
+      }
+    />
+    <WeatherInfoItem
+      icon={<FontAwesomeIcon icon={faArrowUp} />}
+      label="Cao nhất:"
+      value={
+        dataWeather?.main?.temp_max
+          ? HandleTemperature(dataWeather.main.temp_max)
+          : "--"
+      }
+    />
+    <WeatherInfoItem
+      icon={<FontAwesomeIcon icon={faGauge} />}
+      label="Áp suất:"
+      value={dataWeather?.main?.pressure ?? "--"}
+      unit="hPa"
+    />
+    <WeatherInfoItem
+      icon={<FontAwesomeIcon icon={faCloud} />}
+      label="Mây:"
+      value={dataWeather?.clouds?.all ?? "--"}
+      unit="%"
+    />
+    <WeatherInfoItem
+      icon={<FontAwesomeIcon icon={faSun} />}
+      label="Mọc:"
+      value={
+        dataWeather?.sys?.sunrise
+          ? new Date(dataWeather.sys.sunrise * 1000).toLocaleTimeString("vi-VN", {
+              hour: "2-digit",
+              minute: "2-digit",
+            })
+          : "--"
+      }
+    />
+    <WeatherInfoItem
+      icon={<FontAwesomeIcon icon={faMoon} />}
+      label="Lặn:"
+      value={
+        dataWeather?.sys?.sunset
+          ? new Date(dataWeather.sys.sunset * 1000).toLocaleTimeString("vi-VN", {
+              hour: "2-digit",
+              minute: "2-digit",
+            })
+          : "--"
+      }
+    />
   </div>
 </div>
 

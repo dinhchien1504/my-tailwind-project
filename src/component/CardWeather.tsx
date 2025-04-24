@@ -1,4 +1,3 @@
-"use client";
 import React from "react";
 import { HandleTemperature } from "@/utils/handle-temperature";
 import Image from "next/image";
