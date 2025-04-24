@@ -63,6 +63,8 @@ const NavRight = ({ dataForecast, dataWeather }: IProps) => {
     return () => clearInterval(interval);
   }, []);
 
+  console.log('this is data in navright', dataWeather)
+
   return (
     <div className="flex flex-col justify-center text-center text-black">
       <div className="text-2xl pt-4 font-bold">{greeting}</div>
@@ -74,7 +76,7 @@ const NavRight = ({ dataForecast, dataWeather }: IProps) => {
       <div className="pt-4 flex flex-row justify-center gap-4">
         <div className="text-5xl font-semibold text-gray-700 justify-center flex items-center">
           {dataWeather?.main?.feels_like !== undefined
-            ? HandleTemperature(dataWeather.main.temp)
+            ? HandleTemperature(dataWeather.main.feels_like)
             : "--"}
         </div>
         <div className="flex flex-col gap-2">

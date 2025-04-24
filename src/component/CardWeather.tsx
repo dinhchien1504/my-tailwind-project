@@ -14,7 +14,7 @@ const CardWeather = ({ dateLabel, temperature, description, isToday }: IProps) =
 
   return (
     <div className='flex flex-col  text-center  rounded-xl border-2 border-solid border-transparent 
-     hover:border-[#E1E1E1] p-3 transition duration-200  min-h-[160px] w-full '>
+     hover:border-[#E1E1E1] py-4 transition duration-200  min-h-[20vh] w-full '>
       <div className="text-lg font-semibold text-gray-700  mb-4"> 
       {isToday && !/^\d{1,2}(:\d{2})?\s?(AM|PM)?$/i.test(dateLabel) ? 'Today' : dateLabel}
       </div>
